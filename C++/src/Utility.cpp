@@ -18,9 +18,19 @@ size_t callbackFunc(char* ptr, size_t size, size_t nmemb, const char* path)
 AoCUtilityTool::AoCUtilityTool(const char* configPath)
 {
     std::ifstream ifs(configPath);
+    if(!ifs.is_open())
+    {
+        throw "Error, could not open config file!";
+    }
+
     std::stringstream buff;
     buff << ifs.rdbuf();
     m_cookieSession = buff.str();
+
+    if(m_cookieSession == "")
+    {
+        throw "Error, looks like there is no cookie for your session in the config file!";
+    }
 }
 
 bool AoCUtilityTool::getInput(InputDate date, const char* path)
