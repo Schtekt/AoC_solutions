@@ -1,12 +1,13 @@
+#pragma once
 #include "../Utility.h"
 
 class AoCSolution_2022_1 : public AoCDaySolution
 {
 public:
 	AoCSolution_2022_1(AoCUtilityTool& tool);
-	void PartOne();
+	std::string PartOne();
 
-	void PartTwo();
+	std::string PartTwo();
 private:
 };
 
@@ -14,7 +15,7 @@ AoCSolution_2022_1::AoCSolution_2022_1(AoCUtilityTool& tool) : AoCDaySolution(to
 {
 }
 
-void AoCSolution_2022_1::PartOne()
+std::string AoCSolution_2022_1::PartOne()
 {
 	unsigned int calCountHighest = 0;
 	unsigned int calCountCurr = 0;
@@ -41,10 +42,10 @@ void AoCSolution_2022_1::PartOne()
 		calCountHighest = calCountCurr;
 	}
 
-	m_resultPartOne = std::to_string(calCountHighest);
+	return std::to_string(calCountHighest);
 }
 
-void AoCSolution_2022_1::PartTwo()
+std::string AoCSolution_2022_1::PartTwo()
 {
 	unsigned int calCountHighest = 0;
 	unsigned int calCountSecondHighest = 0;
@@ -95,5 +96,5 @@ void AoCSolution_2022_1::PartTwo()
 		calCountThirdHighest = calCountCurr;
 	}
 
-	m_resultPartTwo = std::to_string(calCountHighest + calCountSecondHighest + calCountThirdHighest);
+	return std::to_string(calCountHighest + calCountSecondHighest + calCountThirdHighest);
 }

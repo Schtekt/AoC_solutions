@@ -4,13 +4,13 @@ class AoCSolution_2021_2 : public AoCDaySolution
 {
 public:
 	AoCSolution_2021_2(AoCUtilityTool& tool) : AoCDaySolution(tool, { "2021","2" }) {};
-	void PartOne();
+	std::string PartOne();
 
-	void PartTwo();
+	std::string PartTwo();
 private:
 };
 
-void AoCSolution_2021_2::PartOne()
+std::string AoCSolution_2021_2::PartOne()
 {
 	int depth = 0;
 	int horizontal = 0;
@@ -34,10 +34,10 @@ void AoCSolution_2021_2::PartOne()
 		}
 	}
 
-	m_resultPartOne = std::to_string(horizontal * depth);
+	return std::to_string(horizontal * depth);
 }
 
-void AoCSolution_2021_2::PartTwo()
+std::string AoCSolution_2021_2::PartTwo()
 {
 	size_t depth = 0;
 	size_t horizontal = 0;
@@ -63,5 +63,5 @@ void AoCSolution_2021_2::PartTwo()
 		}
 	}
 
-	m_resultPartTwo = std::to_string(horizontal * depth);
+	return std::to_string(horizontal * depth);
 }

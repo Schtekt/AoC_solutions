@@ -110,7 +110,7 @@ void AoCUtilityTool::InitDay(InputDate date)
     }
 }
 
-AoCDaySolution::AoCDaySolution(AoCUtilityTool& utility, InputDate&& date): m_utility(utility), m_date(date), m_resultPartOne(""), m_resultPartTwo("")
+AoCDaySolution::AoCDaySolution(AoCUtilityTool& utility, InputDate&& date): m_utility(utility), m_date(date)
 {
     m_utility.InitDay(m_date);
 }
@@ -118,14 +118,12 @@ AoCDaySolution::AoCDaySolution(AoCUtilityTool& utility, InputDate&& date): m_uti
 void AoCDaySolution::Solve()
 {
     readData();
-    PartOne();
-    PartTwo();
     printResult();
 }
 
 void AoCDaySolution::printResult()
 {
-    std::cout << "===============================" << m_date.year << " " << m_date.day << "===============================\nPart1:\n" << m_resultPartOne << "\nPart2:\n" << m_resultPartTwo << "\n" << "====================================================================\n";
+    std::cout << "===============================" << m_date.year << " " << m_date.day << "===============================\nPart1:\n" << PartOne() << "\nPart2:\n" << PartTwo() << "\n" << "====================================================================\n";
 }
 
 void AoCDaySolution::readData()

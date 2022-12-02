@@ -1,12 +1,13 @@
+#pragma once
 #include "../Utility.h"
 
 class AoCSolution_2021_1 : public AoCDaySolution
 {
 public:
 	AoCSolution_2021_1(AoCUtilityTool& tool);
-	void PartOne();
+	std::string PartOne();
 
-	void PartTwo();
+	std::string PartTwo();
 private:
 };
 
@@ -14,7 +15,7 @@ AoCSolution_2021_1::AoCSolution_2021_1(AoCUtilityTool& tool) : AoCDaySolution(to
 {
 }
 
-void AoCSolution_2021_1::PartOne()
+std::string AoCSolution_2021_1::PartOne()
 {
 	size_t count = 0;
 	for (size_t i = 1; i < m_input.size(); i++)
@@ -24,10 +25,10 @@ void AoCSolution_2021_1::PartOne()
 			count++;
 		}
 	}
-	m_resultPartOne = std::to_string(count);
+	return std::to_string(count);
 }
 
-void AoCSolution_2021_1::PartTwo()
+std::string AoCSolution_2021_1::PartTwo()
 {
 	size_t count = 0;
 	for (size_t i = 1; i < m_input.size() - 2; i++)
@@ -37,5 +38,5 @@ void AoCSolution_2021_1::PartTwo()
 			count++;
 		}
 	}
-	m_resultPartTwo = std::to_string(count);
+	return std::to_string(count);
 }

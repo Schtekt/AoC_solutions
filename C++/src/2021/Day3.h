@@ -5,13 +5,13 @@ class AoCSolution_2021_3 : public AoCDaySolution
 {
 public:
 	AoCSolution_2021_3(AoCUtilityTool& tool) : AoCDaySolution(tool, { "2021","3" }) {};
-	void PartOne();
+	std::string PartOne();
 
-	void PartTwo();
+	std::string PartTwo();
 private:
 };
 
-void AoCSolution_2021_3::PartOne()
+std::string AoCSolution_2021_3::PartOne()
 {
     std::map<int, long> bitMap;
 
@@ -34,7 +34,7 @@ void AoCSolution_2021_3::PartOne()
     }
 
 
-    m_resultPartOne = std::to_string(gamma*epsilon);
+    return std::to_string(gamma*epsilon);
 }
 
 std::vector<std::string> SplitResults(char character, size_t position, std::vector<std::string>& in)
@@ -66,7 +66,7 @@ std::map<int, long> CalcDiff(std::vector<std::string>& in)
     return bitMap;
 }
 
-void AoCSolution_2021_3::PartTwo()
+std::string AoCSolution_2021_3::PartTwo()
 {
     std::vector<std::string> oxyCandidates = m_input;
     std::vector<std::string> co2Candidates = m_input;
@@ -107,5 +107,5 @@ void AoCSolution_2021_3::PartTwo()
         co2Val += (co2Candidates[0][i] == '1' ? 1 : 0) * static_cast<size_t>(pow(2, nrOfBits - 1 - i));
     }
 
-    m_resultPartTwo = std::to_string(oxyVal * co2Val);
+    return std::to_string(oxyVal * co2Val);
 }

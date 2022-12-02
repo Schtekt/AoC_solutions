@@ -26,15 +26,13 @@ class AoCDaySolution
 public:
     AoCDaySolution(AoCUtilityTool& utility, InputDate&& date);
 
-    virtual void PartOne() = 0;
+    virtual std::string PartOne() = 0;
 
-    virtual void PartTwo() = 0;
+    virtual std::string PartTwo() = 0;
 
     void Solve();
 protected:
     std::vector<std::string> m_input;
-    std::string m_resultPartOne;
-    std::string m_resultPartTwo;
     InputDate m_date;
 private:
     void printResult();
