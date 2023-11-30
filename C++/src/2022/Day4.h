@@ -1,5 +1,5 @@
 #pragma once
-#include "../Utility.h"
+#include "Utility.h"
 #include <iostream>
 
 class AoCSolution_2022_4 : public AoCDaySolution

@@ -235,7 +235,7 @@ std::string AoCSolution_2022_13::PartTwo()
             sortedList.emplace_back(left);
     }
 
-    unsigned int twoPos = 1 + std::distance(sortedList.begin(), std::find(sortedList.begin(), sortedList.end(), two));
-    unsigned int sixPos = 1 + std::distance(sortedList.begin(), std::find(sortedList.begin(), sortedList.end(), six));
+    int64_t twoPos = 1 + std::distance(sortedList.begin(), std::find(sortedList.begin(), sortedList.end(), two));
+    int64_t sixPos = 1 + std::distance(sortedList.begin(), std::find(sortedList.begin(), sortedList.end(), six));
     return std::to_string(twoPos * sixPos);
 }
