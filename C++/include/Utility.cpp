@@ -9,7 +9,8 @@
 
 size_t callbackFunc(char* ptr, size_t size, size_t nmemb, const char* path)
 {
-    std::ofstream ofs(path);
+    std::ofstream ofs;
+    ofs.open(path, std::ios_base::app);
     ofs << ptr;
     ofs.close();
     return nmemb * size;
