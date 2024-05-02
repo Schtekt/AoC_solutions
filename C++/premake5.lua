@@ -14,17 +14,13 @@ workspace "AoC"
 
         filter {"configurations:Debug", "platforms:Win64"}
             architecture "x64"
-            includedirs{"ExternalLibraries/curl/debug_x64/include", "include"}
-            libdirs{"ExternalLibraries/curl/debug_x64/lib"}
-            links{"libcurl_a_debug.lib", "Ws2_32.lib", "Crypt32.lib", "Wldap32.lib", "Normaliz.lib"}
+            includedirs{"include"}
             defines { "DEBUG" }
             symbols "On"
 
         filter {"configurations:Release", "platforms:Win64"}
             architecture "x64"
-            includedirs{"ExternalLibraries/curl/release_x64/include", "include"}
-            libdirs{"ExternalLibraries/curl/release_x64/lib"}
-            links{"libcurl_a.lib", "Ws2_32.lib", "Crypt32.lib", "Wldap32.lib", "Normaliz.lib"}
+            includedirs{"include"}
             defines { "NDEBUG" }
             optimize "On"
 

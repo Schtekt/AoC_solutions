@@ -5,7 +5,7 @@
 class AoCSolution_2022_2 : public AoCDaySolution
 {
 public:
-	AoCSolution_2022_2(AoCUtilityTool& tool);
+	AoCSolution_2022_2();
 	std::string PartOne();
 
 	std::string PartTwo();
@@ -26,7 +26,7 @@ const char elfPaper = 'B';
 const char elfScissors = 'C';
 
 
-AoCSolution_2022_2::AoCSolution_2022_2(AoCUtilityTool& tool) : AoCDaySolution(tool, {"2022", "2"})
+AoCSolution_2022_2::AoCSolution_2022_2() : AoCDaySolution({"2022", "2"})
 {
 }
 

@@ -2,8 +2,8 @@
 
 #include <sstream>
 
-AoCSolution_2023_6::AoCSolution_2023_6(AoCUtilityTool& tool)
-: AoCDaySolution{tool, {"2023", "6"}}
+AoCSolution_2023_6::AoCSolution_2023_6()
+: AoCDaySolution{{"2023", "6"}}
 {
 
 }

@@ -89,7 +89,7 @@ struct Monkey
 class AoCSolution_2022_11 : public AoCDaySolution
 {
 public:
-    AoCSolution_2022_11(AoCUtilityTool &tool);
+    AoCSolution_2022_11();
     std::string PartOne();
 
     std::string PartTwo();
@@ -97,7 +97,7 @@ public:
 private:
 };
 
-AoCSolution_2022_11::AoCSolution_2022_11(AoCUtilityTool &tool) : AoCDaySolution(tool, {"2022", "11"})
+AoCSolution_2022_11::AoCSolution_2022_11() : AoCDaySolution({"2022", "11"})
 {
 
 }

@@ -1,9 +1,8 @@
 // Example usage
-#include "2022/Day4.h"
+#include "2023/Day1/Day1.h"
 int main()
 {
-    AoCUtilityTool tool("Resources/Conf.txt");
-    AoCSolution_2022_4 day4(tool);
-    day4.Solve();
+    AoCSolution_2023_1 day1;
+    day1.Solve();
     return 0;
 }

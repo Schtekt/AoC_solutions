@@ -8,13 +8,7 @@ Use premake to generate a visual studio sln file (premake5 vs2022), and any rele
 Once the the sln file has been created you may open up the solution in visual studio.
 However, I personally recommend using vscode instead. This will require you to also generate json tasks for vscode. you can do this by using the command premake5 vscode, which will run a premake script to generate the necessary files.
 
-## Libraries
-In this project, I use libcurl. This is mainly to gather input data from the advent of code website through http requests. To keep the size of this repo, and to not have any duplicates across multiple repos, I have chosen to save the static library outside of this repo.
-
-Unfortunatley I have yet to develop a script to generate these files for any user of this repo.
-
-Therefore it is up to the user to compile the libcurl static library and make sure it is linked correctly to this project.
-The user may therefore need to change the linking paths stated in premake5.lua.
-
-## Config
-As stated before, this project will download inputs from the advent of code website. The user will therefore have to provide their unique session cookie in "Resources/Conf.txt". The format of this file is most probably going to be changed in the future, but as I only use this one unique setting for now, the user will only have to copy in their session cookie there.
+## Input data
+The solutions require the user to add input files themselves.
+These inputs may be fetched from the Advent of code website, where the user must log in in order to get puzzle inputs.
+To add an input for a specific puzzle, the user must add a file with the input data in "Resources/\<year number\>/day_\<day number\>/input.txt", eg. for 2023, day 1 the puzzle input would be placed in "Resources/2023/day_1/input.txt".

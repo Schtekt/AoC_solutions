@@ -7,24 +7,10 @@ struct InputDate
     const char* day;
 };
 
-class AoCUtilityTool
-{
-public:
-    AoCUtilityTool(const char* configPath);
-    AoCUtilityTool() = delete;
-    ~AoCUtilityTool() = default;
-
-    void InitDay(InputDate date);
-
-private:
-    bool getInput(InputDate date, const char* path);
-    std::string m_cookieSession;
-};
-
 class AoCDaySolution
 {
 public:
-    AoCDaySolution(AoCUtilityTool& utility, InputDate&& date);
+    AoCDaySolution(InputDate&& date);
 
     virtual std::string PartOne() = 0;
 
@@ -37,6 +23,4 @@ protected:
 private:
     void printResult();
     void readData();
-
-    AoCUtilityTool& m_utility;
 };

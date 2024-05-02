@@ -4,14 +4,14 @@
 class AoCSolution_2021_1 : public AoCDaySolution
 {
 public:
-	AoCSolution_2021_1(AoCUtilityTool& tool);
+	AoCSolution_2021_1();
 	std::string PartOne();
 
 	std::string PartTwo();
 private:
 };
 
-AoCSolution_2021_1::AoCSolution_2021_1(AoCUtilityTool& tool) : AoCDaySolution(tool, {"2021", "1"})
+AoCSolution_2021_1::AoCSolution_2021_1() : AoCDaySolution({"2021", "1"})
 {
 }
 

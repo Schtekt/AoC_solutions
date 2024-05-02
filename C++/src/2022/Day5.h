@@ -84,7 +84,7 @@ std::string CrateMap::GetTop()
 class AoCSolution_2022_5 : public AoCDaySolution
 {
 public:
-    AoCSolution_2022_5(AoCUtilityTool &tool);
+    AoCSolution_2022_5();
     std::string PartOne();
 
     std::string PartTwo();
@@ -92,7 +92,7 @@ public:
 private:
 };
 
-AoCSolution_2022_5::AoCSolution_2022_5(AoCUtilityTool &tool) : AoCDaySolution(tool, {"2022", "5"})
+AoCSolution_2022_5::AoCSolution_2022_5() : AoCDaySolution({"2022", "5"})
 {
 }
 

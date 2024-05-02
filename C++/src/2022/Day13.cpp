@@ -163,7 +163,7 @@ struct wrapped_list {
     }
 };
 
-AoCSolution_2022_13::AoCSolution_2022_13(AoCUtilityTool& tool) : AoCDaySolution(tool, {"2022", "13"})
+AoCSolution_2022_13::AoCSolution_2022_13() : AoCDaySolution({"2022", "13"})
 {
 }
 

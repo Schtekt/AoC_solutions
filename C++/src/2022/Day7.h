@@ -7,7 +7,7 @@
 class AoCSolution_2022_7 : public AoCDaySolution
 {
 public:
-    AoCSolution_2022_7(AoCUtilityTool &tool);
+    AoCSolution_2022_7();
     std::string PartOne();
 
     std::string PartTwo();
@@ -175,7 +175,7 @@ std::unique_ptr<Dir> ParseInput(std::vector<std::string> &commands)
     return first;
 }
 
-AoCSolution_2022_7::AoCSolution_2022_7(AoCUtilityTool &tool) : AoCDaySolution(tool, {"2022", "7"})
+AoCSolution_2022_7::AoCSolution_2022_7() : AoCDaySolution({"2022", "7"})
 {
 }
 

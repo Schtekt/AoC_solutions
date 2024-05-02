@@ -4,7 +4,7 @@
 class AoCSolution_2023_6 : public AoCDaySolution
 {
 public:
-	AoCSolution_2023_6(AoCUtilityTool& tool);
+	AoCSolution_2023_6();
 	std::string PartOne();
 
 	std::string PartTwo();

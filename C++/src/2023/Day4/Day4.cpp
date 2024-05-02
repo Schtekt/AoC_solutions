@@ -1,8 +1,8 @@
 #include "Day4.h"
 #include <sstream>
 
-AoCSolution_2023_4::AoCSolution_2023_4(AoCUtilityTool& tool)
-: AoCDaySolution(tool, {"2023", "4"})
+AoCSolution_2023_4::AoCSolution_2023_4()
+: AoCDaySolution({"2023", "4"})
 {
 
 }

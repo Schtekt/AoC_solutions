@@ -5,7 +5,7 @@
 class AoCSolution_2022_4 : public AoCDaySolution
 {
 public:
-	AoCSolution_2022_4(AoCUtilityTool& tool);
+	AoCSolution_2022_4();
 	std::string PartOne();
 
 	std::string PartTwo();
@@ -13,7 +13,7 @@ private:
 };
 
 
-AoCSolution_2022_4::AoCSolution_2022_4(AoCUtilityTool& tool) : AoCDaySolution(tool, {"2022", "4"})
+AoCSolution_2022_4::AoCSolution_2022_4() : AoCDaySolution({"2022", "4"})
 {
 }
 
