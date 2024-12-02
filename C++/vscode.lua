@@ -1,160 +1,131 @@
-local p = premake
-
-p.modules.vscode = {}
-p.modules.vscode._VERSION = p._VERSION
-
-local vscode = p.modules.vscode
-local projects = {}
-local projectOptions = ""
+local workspaceName = ""
+local projectNames = {}
 local configurations = {}
-local configurationOptions = ""
-local platforms = {}
-local platformOptions = ""
+local operatingSystem = ""
+
+function winLaunch(projectName, outputFile)
+    outputFile:write(
+        "\t\t{\n" ..
+        "\t\t\t\"name\":\"" .. projectName .. "\",\n" ..
+        "\t\t\t\"type\":\"cppvsdbg\",\n" ..
+        "\t\t\t\"request\":\"launch\",\n" ..
+        "\t\t\t\"program\":\"${workspaceFolder}/Build/target/" .. projectName .. "/" .. projectName ..".exe\",\n" ..
+        "\t\t\t\"stopAtEntry\":false,\n" ..
+        "\t\t\t\"cwd\":\"${workspaceFolder}\",\n" ..
+        "\t\t\t\"console\": \"integratedTerminal\"\n" ..
+        "\t\t},\n"
+    )
+end
 
 newaction {
     trigger = "vscode",
     description = "Generate vscode tasks",
 
     onWorkspace = function(wrk)
-
+        workspaceName = wrk.name
+        operatingSystem = wrk.system
         for index, c in ipairs(wrk.configurations) do
-            if #configurations == 0 then
-                configurationOptions = configurationOptions .. [["]] .. c .. [["]]
-            else
-                configurationOptions = configurationOptions .. [[, "]] .. c ..[["]]
-            end
             table.insert(configurations, c)
-        end
-
-        for index, p in ipairs(wrk.platforms) do
-            if #platforms == 0 then
-                platformOptions = platformOptions .. [["]] .. p .. [["]]
-            else
-                platformOptions = platformOptions .. [[, "]] .. p ..[["]]
-            end
-            table.insert(platforms, p)
         end
     end,
 
     onProject = function(prj)
-        
         if prj.kind == 'ConsoleApp' or prj.kind == 'WindowedApp' then
-            if #projects == 0 then
-                projectOptions = projectOptions .. [["]] .. prj.name .. [["]]
-            else
-                projectOptions = projectOptions .. [[, "]] .. prj.name ..[["]]
-            end
-            table.insert(projects, prj.name)
+            table.insert(projectNames, prj.name)
         end
     end,
 
     execute = function()
-        file = io.open(".vscode/launch.json", "w")
-        io.output(file)
+        tasksFile = io.open(".vscode/tasks.json", "w")
+        tasksFile:write(
+            "{\n" ..
+            "\t\"version\": \"2.0.0\"," ..
+            "\t\"tasks\": [\n" ..
+            "\t\t{\n" ..
+            "\t\t\t\"label\": \"Generate build files\",\n" ..
+            "\t\t\t\"type\": \"shell\",\n" ..
+            "\t\t\t\"group\": \"none\",\n" ..
+            "\t\t\t\"command\": \"premake5\",\n" ..
+            "\t\t\t\"windows\": {\n" ..
+            "\t\t\t\t\"args\": [\n" ..
+            "\t\t\t\t\t\"vs2022\"\n" ..
+            "\t\t\t\t]\n" ..
+            "\t\t\t},\n" ..
+            "\t\t},\n" ..
+            "\t\t{\n" ..
+            "\t\t\t\"label\": \"Clean build folder\",\n" ..
+            "\t\t\t\"type\": \"shell\",\n" ..
+            "\t\t\t\"group\": \"none\",\n" ..
+            "\t\t\t\"windows\": {\n" ..
+            "\t\t\t\t\"command\": \"rd\",\n" ..
+            "\t\t\t\t\"args\": [\n" ..
+            "\t\t\t\t\t\"/s\",\n" ..
+            "\t\t\t\t\t\"/q\",\n" ..
+            "\t\t\t\t\t\"Build\",\n" ..
+            "\t\t\t\t\t\";\",\n" ..
+            "\t\t\t\t\t\"echo\",\n" ..
+            "\t\t\t\t\t\"Cleaning Build folder\"\n" ..
+            "\t\t\t\t]\n" ..
+            "\t\t\t}\n" ..
+            "\t\t},\n" ..
+            "\t\t{\n" ..
+            "\t\t\t\"label\": \"Build\",\n" ..
+            "\t\t\t\"type\": \"shell\",\n" ..
+            "\t\t\t\"group\": \"build\",\n" ..
+            "\t\t\t\"dependsOn\": [\n" ..
+            "\t\t\t\t\"Generate build files\"\n" ..
+            "\t\t\t],\n" ..
+            "\t\t\t\"windows\": {\n" ..
+            "\t\t\t\t\"command\": \"msbuild\",\n" ..
+            "\t\t\t\t\"args\": [\n" ..
+            "\t\t\t\t\t\"Generated/" .. workspaceName .. ".sln\",\n" ..
+            "\t\t\t\t\t\"/m\",\n" ..
+            "\t\t\t\t\t\"/property:Configuration=${input:buildConfig}\",\n" ..
+            "\t\t\t\t\t\"/property:GenerateFullPaths=true\",\n" ..
+            "\t\t\t\t\t\"/t:build\"\n" ..
+            "\t\t\t\t],\n" ..
+            "\t\t\t\t\"problemMatcher\": \"$msCompile\"\n" ..
+            "\t\t\t},\n" ..
+            "\t\t},\n" ..
+            "\t],\n" ..
+            "\t\"inputs\": [\n" ..
+            "\t\t{\n" ..
+            "\t\t\t\"id\": \"buildConfig\",\n" ..
+            "\t\t\t\"description\": \"Select build config\",\n" ..
+            "\t\t\t\"default\": \"" .. configurations[1] .."\",\n" ..
+            "\t\t\t\"type\": \"pickString\",\n" ..
+            "\t\t\t\"options\": ["
+        )
 
-io.write([[{
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "name": "Launch (VS2022)",
-            "program": "${workspaceFolder}\\Build\\bin\\${input:buildProject}\\${input:buildProject}.exe",
-            "type": "cppvsdbg",
-            "request": "launch",
-            "args": [],
-            "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
-            "console": "externalTerminal"
-        }
-    ],
-    "inputs": [
-        {
-            "id": "buildProject",
-            "description": "Select project to launch: ",
-            "default": "]] .. projects[1] .. [[",
-            "type": "pickString",
-            "options": []] .. projectOptions .. [[]
-        }
-    ]
-}]])
-        io.close(file)
+        for index, config in pairs(configurations) do
+            tasksFile:write("\"" .. config .. "\",")
+        end
 
-        file = io.open(".vscode/tasks.json", "w")
-        io.output(file)
+        tasksFile:write(
+            " ]\n" ..
+            "\t\t}\n" ..
+            "\t]\n" ..
+            "}"
+        )
+        tasksFile:close()
 
-io.write([[
-{
-    "version": "2.0.0",
-    "tasks": [
-        {
-            "label": "Clean Build folder",
-            "type": "shell",
-            "group": "none",
-            "windows": {
-                "command": "Remove-Item",
-                "args": [
-                    "build",
-                    "-Recurse",
-                    "-Force",
-                    "-Confirm:$false",
-                    ";",
-                    "echo",
-                    "Cleaning Build folder."
-                ]
-            },
-            "problemMatcher": []
-        },
-        {
-            "label": "Generate build files (VS2022)",
-            "type": "shell",
-            "group": "none",
-            "command": "premake5 vs2022",
-            "problemMatcher": []
-        },
-        {
-            "dependsOn": [
-                "Generate build files (VS2022)",
-                "Clean Build folder"
-            ],
-            "label": "Build (VS2022)",
-            "type": "shell",
-            "command": "msbuild",
-            "args": [
-                "${workspaceFolderBaseName}.sln",
-                "/m",
-                "/property:Configuration=${input:buildConfigVS2022}",
-                "/property:Platform=${input:buildPlatformVS2022}",
-                "/property:GenerateFullPaths=true",
-                "/t:build"
-            ],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "presentation": {
-                "reveal": "silent"
-            },
-            "problemMatcher": "$msCompile"
-        }
-    ],
-    "inputs": [
-        {
-            "id": "buildConfigVS2022",
-            "description": "Select build config for VS2022",
-            "default": "]] .. configurations[1] .. [[",
-            "type": "pickString",
-            "options": []] .. configurationOptions .. [[]
-        },
-        {
-            "id": "buildPlatformVS2022",
-            "description": "Select build platform for VS2022:",
-            "default": "]] .. platforms[1] .. [[",
-            "type": "pickString",
-            "options": []] .. platformOptions .. [[]
-        }
-    ]
-}]])
-    io.close(file)
+        launchFile = io.open(".vscode/launch.json", "w")
+        launchFile:write(
+            "{\n" ..
+            "\t\"version\": \"0.2.0\",\n" ..
+            "\t\"configurations\":[\n"
+        )
+
+        for index, name in pairs(projectNames) do
+            if operatingSystem == "windows" then
+                winLaunch(name, launchFile)
+            elseif operatingSystem == "linux" then
+                linLaunch(name, launchFile)
+            end
+        end
+        launchFile:write("\t],\n")
+
+        launchFile:write("\n}")
+        launchFile:close()
     end
 }
-
-return vscode
