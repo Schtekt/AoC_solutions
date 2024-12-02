@@ -3,8 +3,8 @@
 #include <sstream>
 #include <algorithm>
 
-AoCSolution_2024_1::AoCSolution_2024_1(AoCUtilityTool& tool)
-: AoCDaySolution(tool, {"2024", "1"})
+AoCSolution_2024_1::AoCSolution_2024_1()
+: AoCDaySolution({"2024", "1"})
 {
 
 }
