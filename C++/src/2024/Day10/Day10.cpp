@@ -1,13 +1,6 @@
 #include "Day10.h"
 #include <sstream>
 
-struct FileBlock {
-    FileBlock(int s, int f)
-    : size(s), freespace(f) {}
-    int size;
-    int freespace;
-};
-
 AoCSolution_2024_10::AoCSolution_2024_10():
 AoCDaySolution({"2024", "10"})
 {}
