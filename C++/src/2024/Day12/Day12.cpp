@@ -84,7 +84,7 @@ std::string AoCSolution_2024_12::PartOne()
     {
         size_t& regionPerimiter = perimiters.emplace_back(0);
         const char regionType = region.first;
-        for(const auto plot : region.second)
+        for(const auto& plot : region.second)
         {
             size_t x = plot.first;
             size_t y = plot.second;
@@ -112,5 +112,119 @@ std::string AoCSolution_2024_12::PartOne()
 
 std::string AoCSolution_2024_12::PartTwo()
 {
-    return "";
+    auto regions = getRegions(m_input);
+    
+    size_t mapHeight = m_input.size();
+    size_t mapWidth = m_input.at(0).size();
+    size_t totalPrice = 0;
+    for(const auto& region : regions)
+    {
+        // Since every fence connects with itself,
+        // the number of lines is the same as the amount of corners
+
+        // e.g.
+        /*
+            *---*
+            |   |
+            |   |
+            *---*
+
+              *-*
+              | |
+            *-* |
+            |   |
+            *---*
+
+            *-------*
+            | *---* |
+            | |   | |
+            | |   | |
+            | |   | |
+            *-*   *-*
+        */
+
+        // Layouts
+        /*
+            Not a corner (Most of these share corners with another plot,
+            but these will be caught in other checks)
+            AAA AAA ABA AAA AAA AAA ABA
+            AAA AAB AAA BAA AAA BAB AAA
+            AAA AAA AAA AAA ABA AAA ABA
+
+            SINGLE CORNER (If two foreign plots, that are not in the same y or x)
+             B   A   A   B
+            AAB AAB BAA BAA
+             A   B   B   A
+
+            DOUBLE CORNER (if three foreign plots)
+             B   A   B   B
+            AAB BAB BAA BAB
+             B   B   B   A
+
+            QUADRUPLE CORNER (if four foreign plots)
+             B
+            BAB
+             B
+
+            EDGE CASES (One corner per diag foreign, if no foreign in vert and hor lines.)
+            BAB AAB
+            AAA BAA
+            BAB BBA
+        */
+
+        size_t corners = 0;
+        for(const auto& plot : region.second)
+        {
+            size_t x = plot.first;
+            size_t y = plot.second;
+
+            uint8_t nrOfForeign = 0;
+
+            bool foreign_up = y == 0;
+            foreign_up = foreign_up || m_input.at(y - 1).at(x) != region.first;
+
+            bool foreign_left = x == 0;
+            foreign_left = foreign_left || m_input.at(y).at(x - 1) != region.first;
+
+            bool foreign_down = y == mapHeight - 1;
+            foreign_down = foreign_down || m_input.at(y + 1).at(x) != region.first;
+
+            bool foreign_right = x == mapWidth - 1;
+            foreign_right = foreign_right || m_input.at(y).at(x + 1) != region.first;
+
+            nrOfForeign += foreign_up + foreign_left + foreign_down + foreign_right;
+
+            if(nrOfForeign == 2)
+            {
+                corners += foreign_up != foreign_down;
+            }
+            else if(nrOfForeign == 3)
+            {
+                corners += 2;
+            }
+            else if(nrOfForeign == 4)
+            {
+                corners += 4;
+            }
+
+            // Edge cases
+            bool foreign_up_left = (y == 0 || x == 0) 
+                    || m_input.at(y - 1).at(x - 1) != region.first;
+            corners += foreign_up_left && !foreign_up && !foreign_left;
+
+            bool foreign_up_right = (y == 0 || x == mapWidth - 1) 
+                    || m_input.at(y - 1).at(x + 1) != region.first;
+            corners += foreign_up_right && !foreign_up && !foreign_right;
+
+            bool foreign_down_left = (y == mapHeight - 1 || x == 0)
+                    || m_input.at(y + 1).at(x - 1) != region.first;
+            corners += foreign_down_left && !foreign_down && !foreign_left;
+
+            bool foreign_down_rigth = (y == mapHeight - 1 || x == mapWidth - 1) 
+                    || m_input.at(y + 1).at(x + 1) != region.first;
+            corners += foreign_down_rigth && !foreign_down && !foreign_right;
+        }
+        totalPrice += corners * region.second.size();
+    }
+    return std::to_string(totalPrice);
 }
