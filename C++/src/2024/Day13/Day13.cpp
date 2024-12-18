@@ -1,6 +1,5 @@
 #include "Day13.h"
 #include <sstream>
-#include <regex>
 
 AoCSolution_2024_13::AoCSolution_2024_13():
 AoCDaySolution({"2024", "13"})

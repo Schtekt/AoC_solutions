@@ -1,5 +1,4 @@
 #include "Day4.h"
-#include <regex>
 
 AoCSolution_2024_4::AoCSolution_2024_4():
 AoCDaySolution({"2024", "4"})
